@@ -104,22 +104,6 @@ const sppd = ref({
 
 const employees = ref([]);
 
-// const transportOptions = {
-//   Darat: ["Mobil Pribadi", "Mobil Dinas", "Bus", "Kereta", "Travel"],
-//   Udara: ["Pesawat"],
-//   Air: ["Kapal"],
-// };
-
-// const availableTransport = computed(() => {
-//    return sppd.value.moda_transport.flatMap(moda => transportOptions[moda] || []);
-// });
-
-// watch(() => sppd.value.moda_transport, (newModa) => {
-//   if (!transportOptions[newModa]?.includes(sppd.value.transportasi)) {
-//     sppd.value.transportasi = "";
-//   }
-// });
-
 const lamaHari = computed(() => {
   if (sppd.value.tanggal_berangkat && sppd.value.tanggal_kembali) {
     const start = new Date(sppd.value.tanggal_berangkat)

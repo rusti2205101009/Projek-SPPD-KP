@@ -228,11 +228,6 @@ const deleteItem = async (id) => {
   }
 }
 
-// const printItem = (id) => {
-//   // window.open(`/spts/${id}/cetak`, '_blank')
-//   window.open(`http://localhost:8000/api/spts/${id}/cetak`, '_blank')
-// }
-
 const printItem = async (id) => {
   try {
     const res = await axios.get(`/api/spts/${id}/cetak`, {

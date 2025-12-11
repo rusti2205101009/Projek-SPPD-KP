@@ -166,13 +166,10 @@ const fetchSpt = async () => {
   spts.value.pegawai_list = data.employees.map(p => ({
     employee_id: p.employee_id,
     nama_pegawai: p.nama_pegawai,
-    // gelar_depan: p.gelar_depan,
-    // gelar_belakang: p.gelar_belakang,
     nip_nipppk: p.nip_nipppk,
     jabatan: p.jabatan,
     pangkat: p.pangkat,
     golongan: p.golongan,
-    // bidang: p.bidang || ''
     bidang: bidangMap[p.id]
   }))
 
@@ -227,7 +224,6 @@ const isiDataPegawai = () => {
   })
 }
 
-// watch(selectedPegawai, isiDataPegawai)
 watch(selectedKepala, val => {
   spts.value.head_division_id = val ? val.id : null
 })

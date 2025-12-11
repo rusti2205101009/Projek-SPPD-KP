@@ -14,67 +14,33 @@ class WordController extends Controller
 {
     public function cetakSpt($id)
     {
-        // $user = Auth::user();
-        // Log::info('Cetak SPT - User info', ['id' => $user->id, 'role' => $user->role]);
         Log::info("Cetak SPT - Mulai", ['spt_id' => $id]);
         
         $spt = Spt::byUser()->with('employeesSpt', 'headDivision', 'template')->findOrFail($id);
-        // dd($spt->head_division_id, $spt->headDivision);
         
-        // $templatePath= storage_path('app/templates/template-spt.docx');
-
-        // $latestTemplate = Template::latest()->first(); // ambil template terbaru
-        // if (!$latestTemplate || !Storage::exists($latestTemplate->file_path)) {
-        //     abort(404, 'Template tidak ditemukan');
-        // }
-
-        // $templatePath = Storage::path($latestTemplate->file_path);
-        // $templateProcessor = new TemplateProcessor($templatePath);
-
         Log::info("SPT ditemukan", ['spt_id' => $id, 'template_id' => $spt->template_id ?? null]);
 
         $template = $spt->template ?? Template::latest()->first();
 
-        if (!$template) { // UPDATED
-            Log::warning("Template tidak ditemukan sama sekali"); // UPDATED
-            abort(404, 'Template tidak ditemukan'); // UPDATED
+        if (!$template) {
+            Log::warning("Template tidak ditemukan sama sekali"); 
+            abort(404, 'Template tidak ditemukan'); 
         }
 
         $disk = Storage::disk('public');
 
-        if (!$disk->exists($template->file_path)) { // UPDATED
-            Log::warning("Template tidak ditemukan di disk", [ // UPDATED
-                'template_id' => $template->id, // UPDATED
-                'expected_path' => $disk->path($template->file_path) // UPDATED
-            ]); // UPDATED
-            abort(404, 'Template tidak ditemukan'); // UPDATED
+        if (!$disk->exists($template->file_path)) { 
+            Log::warning("Template tidak ditemukan di disk", [ 
+                'template_id' => $template->id, 
+                'expected_path' => $disk->path($template->file_path) 
+            ]); 
+            abort(404, 'Template tidak ditemukan'); 
         }
 
         $templatePath = $disk->path($template->file_path);
         Log::info("Template path siap diproses", ['template_id' => $template->id, 'path' => $templatePath]);
 
         $templateProcessor = new TemplateProcessor($templatePath);
-
-        // $pegawai = $spt->employees->first();
-        // if ($pegawai) {
-        //     $namaLengkap = trim(
-        //         ($pegawai->pivot->gelar_depan ? $pegawai->pivot->gelar_depan.' ' : '') .
-        //          $pegawai->pivot->nama_pegawai .
-        //         ($pegawai->pivot->gelar_belakang ? ', '.$pegawai->pivot->gelar_belakang : '')
-        //     );
-
-        //     $templateProcessor->setValue('nama_pegawai', $namaLengkap);
-        //     $templateProcessor->setValue('nip', $pegawai->pivot->nip);
-        //     $templateProcessor->setValue('pangkat', $pegawai->pivot->pangkat);
-        //     $templateProcessor->setValue('golongan', $pegawai->pivot->golongan);
-        //     $templateProcessor->setValue('jabatan', $pegawai->pivot->jabatan);
-        // } else {
-        //     $templateProcessor->setValue('nama_pegawai', '-');
-        //     $templateProcessor->setValue('nip', '-');
-        //     $templateProcessor->setValue('pangkat', '-');
-        //     $templateProcessor->setValue('golongan', '-');
-        //     $templateProcessor->setValue('jabatan', '-');
-        // }
 
         $pegawaiList = $spt->employeesSpt;
         $rows = [];
@@ -107,17 +73,6 @@ class WordController extends Controller
         $templateProcessor->setValue('nomor_surat', $spt->nomor_surat);
         $templateProcessor->setValue('keperluan', $spt->keperluan);
         $templateProcessor->setValue('tanggal_surat', $tanggalSurat);
-
-        // if ($spt->headDivision->ttd && Storage::disk('public')->exists($spt->headDivision->ttd)) {
-        //     $templateProcessor->setImageValue('ttd', [
-        //         'path' => Storage::disk('public')->path($spt->headDivision->ttd),
-        //         'width' => 120,
-        //         'height' => 80,
-        //         'ratio' =>true
-        //     ]);
-        // } else {
-        //     $templateProcessor->setValue('ttd', '');
-        // }
 
         if ($spt->headDivision && $spt->headDivision->ttd && $disk->exists($spt->headDivision->ttd)) { // UPDATED
             $templateProcessor->setImageValue('ttd', [

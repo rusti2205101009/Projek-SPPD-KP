@@ -1,6 +1,5 @@
 <template>
   <aside class="h-screen w-64  bg-gradient-to-b from-blue-600 to-blue-900 text-white flex flex-col shadow-xl overflow-y-auto">
-    <!-- Header user -->
     <div class="p-6 flex flex-col items-center border-b border-blue-600">
       <img 
           :src="userFoto || defaultAvatar" 
@@ -13,17 +12,14 @@
       </div>
     </div>
 
-    <!-- Spinner loading -->
     <div v-if="isLoading" class="flex items-center justify-center mt-4 p-4 bg-blue-500 rounded-full text-white text-sm animate-pulse">
       <i class="fa-solid fa-spinner fa-spin mr-2"></i> Sedang memproses laporan...
     </div>
 
-    <!-- Navigation menu -->
     <div class="flex-1 flex flex-col justify-between">
       <nav class="px-4 py-4 space-y-2 overflow-y-auto">
          <div v-for="item in navItems" :key="item.label">
 
-          <!-- Cetak Laporan -->
           <div v-if="item.label === 'Cetak Laporan'" class="relative">
             <div
               class="cetak-laporan-btn flex items-center gap-3 px-4 py-2 hover:bg-blue-600 w-full rounded-lg font-bold cursor-pointer"
@@ -34,7 +30,6 @@
               <i v-if="isLoading" class="fa-solid fa-spinner fa-spin ml-2 text-sm"></i>
             </div>
 
-            <!-- Dropdown langsung nempel -->
             <div
               v-if="showDropdown"
               class="cetak-laporan-dropdown absolute left-0 mt-2 w-full bg-white text-black rounded-lg shadow-lg max-h-40 overflow-y-auto z-50"
@@ -63,7 +58,6 @@
         </div>
       </nav>
 
-      <!-- Logout -->
       <div class="p-4 border-t border-blue-600">
         <button
           @click="logout"
@@ -129,7 +123,6 @@ onMounted(async () => {
     userNip.value = res.data.nip_nipppk
     userFoto.value = res.data.foto
 
-     // Fetch tahun distinct dari API
     const yearRes = await axios.get("/api/years", {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -146,10 +139,9 @@ onBeforeUnmount(() => {
 
 const logout = async () => {
   try {
-    await axios.post('/api/logout') // hapus token di server
+    await axios.post('/api/logout') 
   } catch (e) {
     console.error('Logout error:', e)
-    // biarin tetap lanjut hapus localStorage meskipun request gagal
   } finally {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
@@ -159,31 +151,6 @@ const logout = async () => {
 
 const isActive = (path) => route.path.startsWith(path)
 
-// Fungsi download laporan
-// const downloadLaporan = async () => {
-//   try {
-//     isLoading.value = true
-//     const token = localStorage.getItem('token')
-//     const response = await axios.get('/export/full-rekap', {
-//       responseType: 'blob',
-//       headers: { Authorization: `Bearer ${token}` }
-//     })
-
-//     const url = window.URL.createObjectURL(new Blob([response.data]))
-//     const link = document.createElement('a')
-//     link.href = url
-//     link.setAttribute('download', 'full-rekap.xlsx')
-//     document.body.appendChild(link)
-//     link.click()
-//     document.body.removeChild(link)
-//   } catch (err) {
-//     console.error("DETAIL ERROR:",  err.message, err);
-//   } finally {
-//     isLoading.value = false
-//   }
-// }
-
-// Konfirmasi dan download laporan
 const confirmAndDownload = async (year) => {
   if (!year) return;
 
@@ -215,7 +182,6 @@ const confirmAndDownload = async (year) => {
     console.error("DETAIL ERROR:", err.message, err);
   } finally {
     isLoading.value = false;
-    // year.value = "";
   }
 };
 

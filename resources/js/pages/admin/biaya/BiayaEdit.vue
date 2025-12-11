@@ -211,35 +211,6 @@ const fetchCost = async () => {
   }
 };
 
-// const updateBiaya = async () => {
-//   try {
-//     const payload = {
-//       uang_perhari: cost.uang_perhari,
-//       uang_representasi: cost.uang_representasi,
-//       nama_hotel: cost.nama_hotel,
-//       biaya_kontribusi: cost.biaya_kontribusi,
-//       biaya_akomodasi: cost.biaya_akomodasi,
-//       biaya_tiket_berangkat: cost.biaya_tiket_berangkat,
-//       biaya_tiket_kembali: cost.biaya_tiket_kembali,
-//       biaya_bantuan_transport: cost.biaya_bantuan_transport,
-//       biaya_taxi_berangkat: cost.biaya_taxi_berangkat,
-//       biaya_taxi_kembali: cost.biaya_taxi_kembali,
-//       biaya_travel: cost.biaya_travel,
-//       biaya_tidak_menginap: cost.biaya_tidak_menginap,
-//       lama_hari: lamaHari.value,
-//       total_uang_harian: totalPerhari.value,
-//       total_biaya: totalBiaya.value,
-//     };
-
-//     const res = await axios.put(`/api/costs/${route.params.id}`, payload);
-//     alert(res.data.message || "Data berhasil diupdate");
-//     router.push("/admin/rincian-biaya");
-//   } catch (error) {
-//     console.error(error.response?.data || error.message);
-//     alert("Gagal update rincian biaya");
-//   }
-// };
-
 const updateBiaya = async () => {
   try {
     const formData = new FormData();

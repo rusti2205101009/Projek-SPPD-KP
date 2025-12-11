@@ -152,22 +152,6 @@ const fetchDeparture = async () => {
   }
 };
 
-// const updateDeparture = async () => {
-//   try {
-//     const payload = { ...form.value }
-//     delete payload.nama_pegawai
-//     delete payload.nomor_surat
-//     delete payload.daerah_tujuan
-//     delete payload.tempat_tujuan
-
-//     await axios.put(`/api/departures/${route.params.id}`, payload)
-//     alert("Data berhasil diperbarui")
-//     router.push("/admin/keberangkatan")
-//   } catch (e) {
-//     alert("Gagal update data: " + e.message)
-//   }
-// }
-
 const updateDeparture = async () => {
   try {
     const payload = new FormData();

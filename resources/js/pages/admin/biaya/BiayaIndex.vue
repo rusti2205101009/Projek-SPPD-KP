@@ -75,15 +75,6 @@
                   >
                     <i class="fa fa-eye text-xs"></i>
                   </a>
-                  <!-- Download -->
-                  <!-- <a
-                    :href="cost.bukti_file_url"
-                    download
-                    class="w-7 h-7 flex items-center justify-center rounded-full bg-green-500 text-white hover:bg-green-600"
-                    title="Download"
-                  >
-                    <i class="fa fa-download text-xs"></i>
-                  </a> -->
                 </div>
               </template>
               <template v-else>

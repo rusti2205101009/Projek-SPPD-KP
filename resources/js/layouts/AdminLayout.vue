@@ -36,7 +36,7 @@
             id="profile-menu"
             class="absolute top-full right-4 mt-2 w-56 bg-white border rounded shadow z-50"
             >
-            <!-- Foto + Nama + NIP -->
+            <!-- Foto, Nama, NIP -->
             <div class="p-4 bg-blue-600 text-sm text-white flex items-center gap-3">
               <img
                 :src="userFoto || defaultAvatar"
@@ -50,7 +50,7 @@
             </div>
         <hr />
 
-        <!-- Semua tombol vertikal -->
+        <!-- tombol vertikal -->
         <div class="flex flex-col text-sm px-4 py-2 gap-2">
             <router-link
               to="/user/user-profile/edit"
@@ -111,7 +111,6 @@
                 </div>
               </div>
 
-              <!-- default link -->
               <router-link
                 v-else
                 :to="item.path"
@@ -163,10 +162,9 @@ function toggleDropdown() {
 
 const logout = async () => {
   try {
-    await axios.post('/api/logout') // hapus token di server
+    await axios.post('/api/logout') 
   } catch (e) {
     console.error('Logout error:', e)
-    // biarin tetap lanjut hapus localStorage meskipun request gagal
   } finally {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
@@ -174,7 +172,6 @@ const logout = async () => {
   }
 }
 
-// Handle click outside to close popups
 const handleClickOutside = (e) => {
   const dropdown = document.querySelector('.cetak-laporan-dropdown')
   const button = document.querySelector('.cetak-laporan-btn')

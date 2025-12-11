@@ -120,16 +120,6 @@ const spts = ref({
   head_division_id: ''
 })
 
-// const logState = (label) => {
-//   console.group(`${label}`)
-//   console.log("selectedPegawai:", JSON.parse(JSON.stringify(selectedPegawai.value)))
-//   console.log("spts.pegawai_list:", JSON.parse(JSON.stringify(spts.value.pegawai_list)))
-//   console.log("daftarPegawai:", daftarPegawai.value.map(p => p.id))
-//   console.log("daftarKepala:", daftarKepala.value.map(k => k.id))
-//   console.log("head_division_id:", spts.value.head_division_id)
-//   console.groupEnd()
-// }
-
 const fetchPegawai = async (query = '') => {
   try {
     const res = await axios.get('/api/employees/dropdown', {
@@ -139,7 +129,7 @@ const fetchPegawai = async (query = '') => {
       }
     })
     daftarPegawai.value = res.data
-    // console.log("✅ Fetch Pegawai", daftarPegawai.value.map(p => p.id))
+    // console.log("Fetch Pegawai", daftarPegawai.value.map(p => p.id))
   } catch (err) {
     console.error('Gagal memuat pegawai:', err)
   }
@@ -148,7 +138,7 @@ const fetchPegawai = async (query = '') => {
 const fetchKepala = async () => {
   const res = await axios.get('/api/head_divisions')
   daftarKepala.value = res.data.data
-  // console.log("✅ Fetch Kepala", daftarKepala.value.map(k => k.id))
+  // console.log("Fetch Kepala", daftarKepala.value.map(k => k.id))
 }
 
 const isInitialLoad = ref(true)
@@ -162,7 +152,7 @@ watch(selectedPegawai, () => {
 })
 
 const fetchStp = async () => {
-  // console.log("📌 Fetch SPT:", id)
+  // console.log("Fetch SPT:", id)
   const res = await axios.get(`/api/spts/${id}`)
   const data = res.data.data
 
@@ -181,13 +171,10 @@ const fetchStp = async () => {
   spts.value.pegawai_list = data.employees.map(p => ({
     employee_id: p.employee_id,
     nama_pegawai: p.nama_pegawai,
-    // gelar_depan: p.gelar_depan,
-    // gelar_belakang: p.gelar_belakang,
     nip_nipppk: p.nip_nipppk,
     jabatan: p.jabatan,
     pangkat: p.pangkat,
     golongan: p.golongan,
-    // bidang: p.bidang || ''
     bidang: bidangMap[p.id]
   }))
 
@@ -242,10 +229,9 @@ const isiDataPegawai = () => {
   })
 }
 
-// watch(selectedPegawai, isiDataPegawai)
 watch(selectedKepala, val => {
   spts.value.head_division_id = val ? val.id : null
-  // console.log("🎩 Kepala Divisi Terpilih:", spts.value.head_division_id)
+  // console.log("Kepala Divisi Dipilih:", spts.value.head_division_id)
 })
 
 const submitFormSpt = async () => {
@@ -264,9 +250,9 @@ const submitFormSpt = async () => {
     }))
   }
 
-  // console.log("📦 Final Payload:", JSON.parse(JSON.stringify(payload)))
+  // console.log("Final Payload:", JSON.parse(JSON.stringify(payload)))
 
-  // console.log("🧪 Cek Pegawai List Detail:")
+  // console.log("Cek Pegawai List Detail:")
   // payload.pegawai_list.forEach((p, i) => {
   //   console.log(`Index ${i}:`, {
   //     employee_id: p.employee_id,

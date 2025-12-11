@@ -192,12 +192,12 @@ const submitFormSpt = async () => {
         bidang: p.bidang
       }))
     }
-    console.log('Payload:', payload) // debug
+    console.log('Payload:', payload) 
     await axios.post('/api/spts', payload)
     alert('STP berhasil disimpan!')
     router.push("/admin/spt")
   } catch (err) {
-    console.error("DETAIL ERROR:", err.response?.data);  // penjelas error
+    console.error("DETAIL ERROR:", err.response?.data);  
     alert('Gagal menyimpan STP')
   }
 }
