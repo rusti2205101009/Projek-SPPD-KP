@@ -61,7 +61,6 @@
         </div>
       </template>
 
-      <!-- Form STP -->
       <div>
         <label class="block mb-1 font-semibold">Nomor Surat</label>
         <input v-model="spts.nomor_surat" type="text" class="w-full border rounded px-3 py-2" required>

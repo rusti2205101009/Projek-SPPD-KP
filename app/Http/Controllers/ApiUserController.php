@@ -54,10 +54,6 @@ class ApiUserController extends Controller
 
         $user = User::create($validated);
 
-        // UserProfile::create([
-        //     'user_id' => $user->id,
-        // ]);
-
         return response()->json([
             'message' => 'User Berhasil Ditambahkan',
             'data' => new UserResource($user->load('employee')),
